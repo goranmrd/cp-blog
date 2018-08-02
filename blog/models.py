@@ -1,4 +1,3 @@
-from django.db import models
 from django.db import models 
 from django.utils import timezone
 from django.db.models.signals import post_save
@@ -41,5 +40,6 @@ class Comment(models.Model):
 
 def my_handler(sender, instance, created, **kwargs):
     notify.send(instance, recipient=instance.post.author, verb='New comment has been added')
+
 
 post_save.connect(my_handler, sender=Comment)
