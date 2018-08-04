@@ -14,13 +14,6 @@ def post_list(request):
 
 
 @login_required
-def mark_as_read(request):
-    qs = User.objects.get(pk=request.user.pk)
-    qs.notifications.mark_all_as_read()
-    return redirect('/')
-
-
-@login_required
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
