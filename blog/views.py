@@ -6,7 +6,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post, Comment
 from .form import PostForm, CommentForm, UserForm
-from notifications.views import AllNotificationsList, UnreadNotificationsList, live_unread_notification_list
 
 
 # Create your views here.
