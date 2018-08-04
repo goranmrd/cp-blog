@@ -3,18 +3,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post, Comment
 from .form import PostForm, CommentForm
-from notifications.views import AllNotificationsList, UnreadNotificationsList, live_unread_notification_list
 
 
 # Create your views here.
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
-
-
-def my_unread_notifications(request):
-    my_unreads = request.user.notifications.unread()
-    return render(request, 'blog/unread_notifications.html', {'my_unreads': my_unreads})
 
 
 @login_required
@@ -78,6 +72,13 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+
+@login_required
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()  
+    return redirect('/', pk=post.pk)
 
 
 @login_required
