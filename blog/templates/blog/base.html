@@ -1,5 +1,5 @@
 {% load staticfiles %}
-{% load notifications_tags %}
+
 <html>
 	<head>
 		<title>CP Blog</title>
@@ -13,16 +13,12 @@
 	</head>
 	<body>
 		<div class="page-header">
-			<script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
-			{% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
 			{% if user.is_authenticated %}
 				<a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
 				<a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
 				<p class="top-menu">Hello {{ user.username }}
 					<small>(<a href="{% url 'logout' %}">Log out</a>)</small>
 				</p>
-				{% live_notify_badge %}
-				<a href="{% url 'my_unread_notifications' %}" class="top-menu" style="color: green">{% notifications_unread %}</a>
 			{% else %}
 				<a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-log-in"></span></a>
 			{% endif %}
