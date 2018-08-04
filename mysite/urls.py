@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-import notifications.urls
 from django.urls import include, path
 from django.contrib import admin
 
@@ -26,5 +25,4 @@ urlpatterns = [
     path('accounts/logout/', view=logout, kwargs={'template_name': 'logout.html', 'next_page': '/'},
         name='logout'),
     path('', include('blog.urls')),
-    path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
 ]
