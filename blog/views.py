@@ -6,28 +6,11 @@ from django.utils import timezone
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment
 from .form import PostForm, CommentForm, UserForm
-from notifications.views import AllNotificationsList, UnreadNotificationsList, live_unread_notification_list
 
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
-
-
-@login_required
-def my_unread_notifications(request):
-    my_unreads = request.user.notifications.unread()
-    # actor is a Comment object and has access to all of Comment model's attributes
-    # print(my_unreads[0].actor.post)
-    # request.user.notifications.mark_all_as_read()
-    return render(request, 'blog/unread_notifications.html', {'my_unreads': my_unreads})
-
-
-@login_required
-def mark_as_read(request):
-    qs = User.objects.get(pk=request.user.pk)
-    qs.notifications.mark_all_as_read()
-    return redirect('/')
 
 
 @login_required
